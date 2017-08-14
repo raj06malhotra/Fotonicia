@@ -1,0 +1,90 @@
+//
+//  AboutUSAPI.swift
+//  Fotonicia
+//
+//  Created by shadman Alam on 28/07/17.
+//  Copyright © 2017 Zatak Softech. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import Alamofire
+import SwiftyJSON
+
+
+extension aboutVC{
+
+
+    func getAboutAPI(){
+    
+     let url =  Constant.BaseUrl.url + Constant.APIEndPoints.AboutUS
+        
+        let dicParams:SMJSON = ["cmspage_id" : "2"]
+        
+        Alamofire.request(url, method: .post, parameters: dicParams, encoding: JSONEncoding.prettyPrinted, headers: nil).responseJSON { (response) in
+            
+            if((response.result.value) != nil){
+                
+                self.myResponse = JSON(response.result.value as Any)
+                
+                
+<<<<<<< HEAD
+                let data  = self.myResponse["cms_page_details"]["cms_element_details"].array!
+                
+                for i in 0..<data.count {
+                    let element = cms_element_details()
+                    element.title = data[i]["title"].stringValue
+                    element.image = data[i]["image"].stringValue
+                   element.description1 = data[i]["description"].stringValue
+                    element.id = data[i]["id"].stringValue
+                    
+                
+
+  
+             print("Discriptionsss \(String(describing: element.description1))")
+=======
+                guard let data  = self.myResponse["cms_page_details"]["cms_element_details"].array else {return}
+                let newdata = cms_element_details()
+                for i in 0..<data.count {
+>>>>>>> 31146ab71c84abd9d8e08c7db85e3bf9b951c205
+                    
+                    newdata.title = data[i]["title"].stringValue
+                    newdata.image = data[i]["image"].stringValue
+                    newdata.description1 = data[i]["description"].stringValue
+                    newdata.id = data[i]["id"].stringValue
+                    
+                    self.array.append(newdata)
+                }
+                
+              
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            }
+        }
+    }
+}
+
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 31146ab71c84abd9d8e08c7db85e3bf9b951c205
+
+class cms_page_detailed: NSObject {
+    
+    var cmspage_id: String?
+    var cmspage_name: String?
+}
+
+class cms_element_details: NSObject {
+    
+    var title: String?
+    var image: String?
+    var description1: String?
+    var id: String?
+}
+
+
+
+
